@@ -1,0 +1,17 @@
+@use "./../styles/colors.scss" as colors;
+
+.dropdownContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+}
+  
+.note {
+  background-color: colors.$black;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+}

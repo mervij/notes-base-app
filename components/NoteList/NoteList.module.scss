@@ -1,0 +1,12 @@
+@use "./../styles/colors.scss" as colors;
+
+.notesContainer {
+  margin-top: 28px;
+  width: 300px;
+}
+
+.noteList {
+  display: flex;
+  flex-direction: column;
+}
+
