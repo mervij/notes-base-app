@@ -3,7 +3,6 @@
 import {
   createContext, useContext, useState, ReactNode,
 } from 'react';
-// import NoteType from types/note in root directory
 import NoteType from '@/types/note';
 
 export interface NotesContextProps {

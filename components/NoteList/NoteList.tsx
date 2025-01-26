@@ -6,7 +6,7 @@ import NoteRow from "./NoteRow";
 export default async function NoteList() {
 
   const supabase = await createClient();
-  const { data: notes } = await supabase.from("notes").select(); 
+  const { data: notes } = await supabase.from("notes").select().order('index', { ascending: true }); 
   
   if (!notes) {
     return <p>No notes found.</p>

@@ -4,6 +4,7 @@ import styles from './NoteList.module.scss'
 import { useEffect, useState } from 'react';
 import Note from '../Note/Note';
 import AddNote from '../AddNote/AddNote';
+import EditNote from '../EditNote/EditNote';
 import NoteType from '@/types/note';
 import { useNotesContext } from "../NotesContext/NotesContext";
 
@@ -22,12 +23,14 @@ export default function NoteRow(props: NoteRowProps) {
   }, [serverNotes])
 
   return (
-    <><AddNote />
-    <div className={styles.noteList} key='notelist1'>
-      {context.notes?.map((note: NoteType, index: number) => (
-        <Note key={note.id} note={note} index={index} />
-      ))}
-    </div>
+    <>
+      <AddNote />
+      {context.noteToEdit && <EditNote />}
+      <div className={styles.noteList} key='notelist1'>
+        {context.notes?.map((note: NoteType, index: number) => (
+          <Note key={note.id} note={note} index={index} />
+        ))}
+      </div>
     </>
   );
 }

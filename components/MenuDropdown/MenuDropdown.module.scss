@@ -1,0 +1,56 @@
+// use styles
+@use "./../styles/colors.scss" as colors;
+
+.menuContainer {
+  position: relative;
+  //display: inline-block;
+  //text-align: left;
+}
+
+.menuButton {
+  appearance: none; 
+  border: none;
+  background-color: transparent;
+  //display: inline-flex;
+  //justify-content: center;
+}
+
+.menuItems {
+  background-color: colors.$white;
+  //position: relative;
+  //top: 30px;
+  //right: 45px;
+  width: 100px;
+  color: colors.$black;
+  display: flex;
+  flex-direction: column;
+  //gap: 8px;
+  position: absolute;
+  right: 0;
+  padding: 8px;
+  border-radius: 5px;
+  z-index: 2;
+  //transform-origin: top right;
+
+  button {
+    appearance: none; 
+    border: none;
+    background-color: transparent;
+    color: colors.$black;
+    text-align: left;
+    padding: 8px;
+    border-radius: 5px;
+  }
+
+  button.active {
+    color: colors.$white;
+    background-color: colors.$darkGray;
+    border-radius: 5px;
+  }
+
+  [data-headlessui-state="active"] {
+    color: colors.$white;
+    background-color: colors.$darkGray;
+  }
+
+}
