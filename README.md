@@ -31,6 +31,7 @@ Currently, the app includes basic note-taking functionalities, but it is a work 
 - Customizable settings:
   - What happens when checking a note (do nothing, move to end, delete immediately)
   - Should new notes be added at the beginning or end of the list
+- Better responsiveness
 - Making the app work as progressive web app
 - Color themes
 - Item reminders
@@ -38,7 +39,7 @@ Currently, the app includes basic note-taking functionalities, but it is a work 
 
 ## Tech Stack
 
-- Framework: Next.js (React + TypeScript)
+- Framework: Next.js (React + TypeScript) with Node.js
 - Database: Supabase
 - Libraries:
   - react-icons for icons
@@ -52,6 +53,11 @@ Currently, the app includes basic note-taking functionalities, but it is a work 
     ```bash
     git clone https://github.com/your-username/notes-app.git
     cd notes-app
+    ```
+    
+2. Change to the correct Node.js version
+    ```bash
+    nvm use
     ```
 
 2. Install dependencies:
