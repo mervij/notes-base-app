@@ -1,6 +1,7 @@
+@use "./../styles/colors.scss" as colors;
+
 .addButton {
-  all: unset;
-  background-color: black;
+  background-color: colors.$almostBlack;
 }
 
 .icon {

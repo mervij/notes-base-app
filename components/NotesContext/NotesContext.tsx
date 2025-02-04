@@ -20,6 +20,11 @@ const initialNotes: NoteType[] = [];
 
 const NotesContext = createContext<NotesContextProps | null>(null);
 
+/**
+ * NotesContextProvider component that provides the notes context to its children.
+ * @param {NotesProps} props - The properties for the NotesContextProvider component.
+ * @returns {JSX.Element} The rendered NotesContextProvider component.
+ */
 export function NotesContextProvider(props: NotesProps) {
   const { children } = props;
   const [notes, setNotes] = useState(initialNotes);
@@ -33,7 +38,12 @@ export function NotesContextProvider(props: NotesProps) {
   );
 }
 
-export const useNotesContext = () => {
+/**
+ * Custom hook to use the notes context.
+ * @returns {NotesContextProps} The notes context.
+ * @throws Will throw an error if used outside of a NotesContextProvider.
+ */
+export const useNotesContext = (): NotesContextProps => {
   const context = useContext(NotesContext);
 
   if (!context) {

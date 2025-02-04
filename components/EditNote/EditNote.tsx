@@ -8,6 +8,11 @@ import updateNote from '@/app/api/updateNote';
 import NoteType from '@/types/note';
 import { useNotesContext } from '../NotesContext/NotesContext';
 
+/**
+ * EditNote component allows users to edit an existing note.
+ * 
+ * @returns {JSX.Element} The EditNote component.
+ */
 export default function EditNote() {
   const [title, setTitle] = useState("");
   
@@ -15,10 +20,18 @@ export default function EditNote() {
 
   const note = context.notes.find((note:NoteType) => note.id == context.noteToEdit);
 
-  const onChange = (event: any) => {
+  /**
+   * Handles the change event for the title input field.
+   * 
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+   */
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   }
 
+  /**
+   * Handles the save button click event to update the note.
+   */
   const handleSaveClick = async () => {
     try {
       if (note) {
@@ -35,7 +48,7 @@ export default function EditNote() {
         context.setNoteToEdit(null);
       }
     } catch (error) {
-      console.error("Error editingnote: ", error);
+      console.error("Error editing note: ", error);
     }
   }
 

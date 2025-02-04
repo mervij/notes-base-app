@@ -1,11 +1,13 @@
+@use "./../styles/colors.scss" as colors;
+
 .dialog {
-  background-color: white;
+  background-color: colors.$white;
   color: black;
   width: 400px;
   height: 200px;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 35%;
   transform: translate(-50%, -50%);
   border-radius: 16px;
   padding: 16px;
@@ -13,6 +15,14 @@
 
   @media only screen and (max-width: 768px) {
     width: 95%;
+  }
+
+  button {
+    width: 100%;
+
+    &:hover {
+      background-color: colors.$darkGray;
+    }
   }
 }
 
@@ -24,7 +34,21 @@
 }
 
 .contentContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  //flex-wrap: wrap;
   gap: 8px;
   width: 100%;
+
+  div,
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    background-color: colors.$almostBlack;
+    justify-self: end;
+    grid-column: 2;
+  }
 }

@@ -4,13 +4,24 @@ import React from 'react';
 import styles from './TextField.module.scss';
 
 /**
- * Text field component properties
+ * TextField component properties 
+ * 
+ * @interface TextFieldProps
+ * @extends {React.InputHTMLAttributes<HTMLInputElement>}
+ * @property {string} [label] - The label text displayed above the text field.
+ * @property {'none' | 'error'} [error] - The error state of the text field.
  */
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: 'none' | 'error';
 }
 
+/**
+ * TextField component
+ * 
+ * @param {TextFieldProps} props - The properties for the TextField component.
+ * @returns {JSX.Element} The rendered TextField component.
+ */
 export default function TextField(props: TextFieldProps) {
   const {
     value,

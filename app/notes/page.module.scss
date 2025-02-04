@@ -1,4 +1,8 @@
+@use "@/components/styles/colors.scss" as colors;
+
 .main {
+  background-color: colors.$almostBlack;
+  color: colors.$text;
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;

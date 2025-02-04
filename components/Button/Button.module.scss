@@ -1,6 +1,9 @@
+@use "./../styles/colors.scss" as colors;
+
 .button {
-  background-color: black;
+  background-color: colors.$almostBlack;
   color: white;
+  background-color: #0a0a0a;
   text-transform: uppercase;
   padding: 8px;
   border-radius: 8px;

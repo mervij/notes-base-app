@@ -3,34 +3,25 @@
 
 .menuContainer {
   position: relative;
-  //display: inline-block;
-  //text-align: left;
 }
 
 .menuButton {
   appearance: none; 
   border: none;
   background-color: transparent;
-  //display: inline-flex;
-  //justify-content: center;
 }
 
 .menuItems {
   background-color: colors.$white;
-  //position: relative;
-  //top: 30px;
-  //right: 45px;
   width: 100px;
   color: colors.$black;
   display: flex;
   flex-direction: column;
-  //gap: 8px;
   position: absolute;
   right: 0;
   padding: 8px;
   border-radius: 5px;
   z-index: 2;
-  //transform-origin: top right;
 
   button {
     appearance: none; 
@@ -40,6 +31,11 @@
     text-align: left;
     padding: 8px;
     border-radius: 5px;
+
+    &:hover {
+      background-color: colors.$darkGray;
+      color: colors.$white;
+    }
   }
 
   button.active {

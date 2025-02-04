@@ -1,7 +1,6 @@
 'use client';
 
 import deleteNote from '@/app/api/deleteNote';
-import updateNote from '@/app/api/updateNote';
 import upsertNotes from '@/app/api/upsertNotes';
 import NoteType from '@/types/note';
 import MenuDropdown from '../MenuDropdown/MenuDropdown';
@@ -9,24 +8,56 @@ import Checkbox from '../inputs/Checkbox/Checkbox';
 import styles from './Note.module.scss';
 import { FiMenu } from "react-icons/fi";
 import { useNotesContext } from "../NotesContext/NotesContext";
+import { useSortable, arrayMove } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+/**
+ * Note component properties.
+ * @typedef {Object} NoteProps
+ * @property {NoteType} note - The note object.
+ * @property {number} index - The index of the note.
+ */
 
 interface NoteProps {
   note: NoteType;
   index: number;
 }
 
+/**
+ * Note component that displays a note with a checkbox and a menu dropdown.
+ * @param {NoteProps} props - The properties for the Note component.
+ * @returns {JSX.Element} The rendered Note component.
+ */
 export default function Note(props: NoteProps) {
-  const { note, index} = props;
+  const { note, index } = props;
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: note.id });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
   const context = useNotesContext();
 
-  const handleMenuDelete = (event: any) => {
+  /**
+   * Handles the deletion of a note from the menu.
+   * @param {Object} event - The event object.
+   * @param {string} event.value - The ID of the note to be deleted.
+   */
+  const handleMenuDelete = (event: HTMLButtonElement) => {
     deleteNote(event.value);
     const updatedNotes = context.notes?.filter((note) => note.id != event.value);
     context.setNotes(updatedNotes);
   }
 
-  const handleMenuEdit = (event: any) => {
+  /**
+   * Handles the editing of a note from the menu.
+   * @param {Object} event - The event object.
+   * @param {string} event.value - The ID of the note to be edited.
+   */
+  const handleMenuEdit = (event: HTMLButtonElement) => {
     context.setNoteToEdit(event.value);
   }
 
@@ -41,77 +72,47 @@ export default function Note(props: NoteProps) {
     }
   ]
 
-  const handleCheckboxChange = (event: any) => {
+  /**
+   * Handles the change event of the checkbox.
+   * @param {Object} event - The event object.
+   * @param {boolean} event.target.checked - The checked state of the checkbox.
+   * @param {string} event.target.id - The ID of the note.
+   */
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
 
     const id: string = event.target.id;
-    updateNote(id, undefined, checked, undefined);
+    const checkedNote = context.notes?.find((note) => note.id == id);
 
-    const updatedNotes = context.notes?.map((note: NoteType) => {
-      if (note.id == id) {
-        note.checked = checked;
+    if (checkedNote) {
+      const updatedNotes = context.notes?.map((note: NoteType) => {
+        if (note.id == id) {
+          note.checked = checked;
+        }
+        return note;
+      });
+  
+      const reorderedNotes = arrayMove(updatedNotes, checkedNote.index, checked ? updatedNotes.length - 1 : 0);
+      // Change each item's variable 'index' to match the new order
+      for (let i = 0; i < reorderedNotes.length; i++) {
+        reorderedNotes[i].index = i;
       }
-      return note;
-    });
-    
-    const reorderedNotes = reorderNotes(updatedNotes, id, checked ? 'last' : 'first');
-
-    context.setNotes(reorderedNotes);
-    upsertNotes(reorderedNotes);
+  
+      context.setNotes(reorderedNotes);
+      upsertNotes(reorderedNotes);
+    }
   }
 
   return (
-    <div className={styles.note}>
+    <div 
+      ref={setNodeRef}
+      style={style}
+      className={styles.note}
+    >
       <Checkbox id={note.id} label={note.name} isChecked={note.checked} onChange={handleCheckboxChange} />
       <div className={styles.dropdownContainer}>
-        <MenuDropdown id={note.id} menuButton={<FiMenu />} menuItems={menuItems} />
+        <MenuDropdown attr={attributes} list={listeners} id={note.id} menuButton={<FiMenu />} menuItems={menuItems} />
       </div>
     </div>
   );
 }
-
-function reorderNotes(notes: NoteType[], id: string, position: 'first' | 'last' ) {
-
-  const note = notes?.find(note => note.id == id);
-
-  if (!note) {
-    console.error("Note not found");
-    return [];
-  }
-
-  // If the note is already at the top or bottom, do nothing
-  if (position === 'first' && note.index === 0 || (position === 'last' && note.index === notes.length - 1)) {
-    return notes;
-  }
-
-  let updatedNotes: NoteType[] = [];
-
-  // If position is first, go though the notes and give all notes one bigger index than the previous, 
-  // except the note with the id, which gets 0
-  if (position === 'first') {
-    let index = 0;
-    updatedNotes = notes.map((note) => {
-      if (note.id == id) {
-        return { ...note, index: 0 };
-      }
-      index++;
-
-      return { ...note, index: index };
-    });
-  // If position is last, go though the notes starting from the note with the id,
-  // give the note with the id the index length-1 and all others -1 compared to the current
-  } else {
-    note.index = notes.length - 1;
-    for (let i = note.index + 1; i < notes.length; i++) {
-      notes[i].index = notes[i].index - 1; 
-    }
-    updatedNotes = notes.filter((note) => note.id != id);
-    updatedNotes.push(note);
-  }
-
-  updatedNotes.sort((a, b) => a.index - b.index);
-
-  return updatedNotes;
-
-}
-

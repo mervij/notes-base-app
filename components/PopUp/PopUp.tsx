@@ -16,7 +16,12 @@ interface PopUpProps {
   handleClick?: () => void;
 }
 
-export default function PopUp(props: PopUpProps) {
+/**
+ * PopUp component that displays a modal dialog with a title, description, and content.
+ * @param {PopUpProps} props - The properties for the PopUp component.
+ * @returns {JSX.Element} The rendered PopUp component.
+ */
+export default function PopUp(props: PopUpProps): JSX.Element {
   const { title, description, content, isOpen, setIsOpen, buttonName, handleClick } = props;
 
   const context = useNotesContext();
@@ -39,9 +44,9 @@ export default function PopUp(props: PopUpProps) {
             </Description>
             <div className={styles.contentContainer}>
               {content} 
-              <Button onClick={handleClick}>{buttonName}</Button>
+              <Button onClick={handleClick}>{buttonName}</Button>    
+              <Button onClick={() => setIsOpen(false)}>Cancel</Button>
             </div>
-            <Button onClick={() => setIsOpen(false)}>Cancel</Button>
           </DialogPanel>
         </Dialog>
       </Transition>

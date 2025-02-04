@@ -1,3 +1,33 @@
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Notes App',
+  description: 'A simple notes app built with Next.js and Supabase',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
+  )
+}
+
+
+/* THE ORIGINAL SUPABASE TEMPLATE
+ *
+ *
+ * */
+
+/*
 import DeployButton from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
@@ -75,3 +105,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+*/
