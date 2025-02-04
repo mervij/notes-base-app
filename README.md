@@ -2,6 +2,10 @@
 
 A simple notes app built with Next.js and TypeScript, using Supabase as the database. This app is designed to be both lightweight and functional, aiming to be as easy to use as possible while still offering enough features to reflect the user's needs.
 
+
+https://github.com/user-attachments/assets/665655ce-c93c-4832-b679-75aa982f747b
+
+
 ## Background
 
 I frequently use a notes app on my phone, but I found some features to be either too complex or lacking essential functionality. To solve this, I decided to build my own notes app with a focus on simplicity and efficiency.
